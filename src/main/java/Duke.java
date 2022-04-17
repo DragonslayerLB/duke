@@ -35,8 +35,8 @@ public class Duke {
                 System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println();
             }
-        } catch (Exception e) {
-            System.out.println("what?");
+        } catch (DukeException e) {
+            System.out.println("☹ OOPS!!! " + e.description);
         }
 
         processNextCommandFromUser();

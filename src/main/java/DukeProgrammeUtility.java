@@ -50,12 +50,17 @@ public class DukeProgrammeUtility {
         }
     }
 
-    public static Task getTask(int index, String commandStr) throws Exception {
+    public static Task getTask(int index, String commandStr) throws DukeException {
         String[] words = commandStr.split(" ");
 
         String description = "";
         String time = "";
+
         if (words[0].equals(Commands.TODO)) {
+            if (words.length == 1) {
+                throw new DukeException("The description of a " + words[0] + " cannot be empty.");
+            }
+
             for (int i = 1; i < words.length; i++) {
                 description += words[i];
 
@@ -67,6 +72,10 @@ public class DukeProgrammeUtility {
             return new TODOTask(index, description);
         } else if (words[0].equals(Commands.EVENT) || words[0].equals(Commands.DEADLINE)) {
             int atIndex = -1;
+            if (words.length == 1) {
+                throw new DukeException("The description of a " + words[0] + " cannot be empty.");
+            }
+
             for (int i = 1; i < words.length; i++) {
                 if (words[i].equals(words[0].equals(Commands.EVENT) ? "/at" : "/by")) {
                     atIndex = i;
@@ -77,7 +86,7 @@ public class DukeProgrammeUtility {
             }
 
             if (atIndex + 1 >= words.length || atIndex == -1) {
-                throw new Exception("failed");
+                throw new DukeException("failed");
             }
 
             for (int i = atIndex + 1; i < words.length; i++) {
@@ -91,6 +100,6 @@ public class DukeProgrammeUtility {
             return new EventTask(index, description, time);
         }
 
-        throw new Exception("failed");
+        throw new DukeException("I'm sorry, but I don't know what that means :-(");
     }
 }
