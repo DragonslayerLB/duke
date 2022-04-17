@@ -16,12 +16,12 @@ public class DukeProgrammeUtility {
         return line;
     }
 
-    public static Boolean isMarkOrUnmarkCommand(String commandStr) {
+    public static Boolean isActionCommand(String commandStr) {
         String[] subStr = commandStr.split(" ");
         try {
             if (subStr.length == 2) {
                 int index = Integer.parseInt(subStr[1]);
-                return subStr[0].equals(Commands.MARK) || subStr[0].equals(Commands.UNMARK);
+                return subStr[0].equals(Commands.MARK) || subStr[0].equals(Commands.UNMARK) || subStr[0].equals(Commands.DELETE);
             } else {
                 return false;
             }
@@ -30,9 +30,21 @@ public class DukeProgrammeUtility {
         }
     }
 
-    public static MarkingCommand processMarkCommand(String commandStr) {
+    public static ActionCommand processActionCommand(String commandStr) throws DukeException {
         String[] subStr = commandStr.split(" ");
-        return new MarkingCommand(subStr[0].equals(Commands.MARK), Integer.parseInt(subStr[1]));
+        TaskType type;
+
+        if (subStr[0].equals(Commands.MARK)) {
+            type = TaskType.MARK;
+        } else if (subStr[0].equals(Commands.UNMARK)) {
+            type = TaskType.UNMARK;
+        } else if (subStr[0].equals(Commands.DELETE)) {
+            type = TaskType.DELETE;
+        } else {
+            throw new DukeException("I'm sorry, but I don't know what that means :-(");
+        }
+
+        return new ActionCommand(type, Integer.parseInt(subStr[1]));
     }
 
     public static String getFormattedTaskDescription(Task task) {
@@ -64,7 +76,7 @@ public class DukeProgrammeUtility {
             for (int i = 1; i < words.length; i++) {
                 description += words[i];
 
-                if (i != words.length-1) {
+                if (i != words.length - 1) {
                     description += " ";
                 }
             }

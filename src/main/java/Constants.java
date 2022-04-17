@@ -5,5 +5,6 @@ public class Constants {
     public static String MARKED_AS_DONE_LINE = "Nice! I've marked this task as done";
     public static String UNMARKED_AS_DONE_LINE = "OK, I've marked this task as not done yet";
     public static String TASK_ADDED_LINE = "Got it. I've added this task";
+    public static String TASK_REMOVED_LINE = "Noted. I've removed this task";
     public static int MAX_TASK_CAPACITY = 100;
 }

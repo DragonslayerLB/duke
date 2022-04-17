@@ -1,4 +1,3 @@
-import javax.swing.text.Utilities;
 import java.util.ArrayList;
 
 public class Duke {
@@ -14,12 +13,37 @@ public class Duke {
                 System.out.println(Constants.LIST_OF_TASKS_LINE + ":");
                 DukeProgrammeUtility.printToConsoleEnumerated(tasks);
                 System.out.println();
-            } else if (DukeProgrammeUtility.isMarkOrUnmarkCommand(userInput)) {
+            } else if (DukeProgrammeUtility.isActionCommand(userInput)) {
                 // mark task as done and print list
-                MarkingCommand command = DukeProgrammeUtility.processMarkCommand(userInput);
-                tasks.get(command.index - 1).isDone = command.isMark;
-                System.out.println((command.isMark ? Constants.MARKED_AS_DONE_LINE : Constants.UNMARKED_AS_DONE_LINE) + ":");
-                DukeProgrammeUtility.printToConsoleSingleTask(tasks.get(command.index - 1));
+                ActionCommand command = DukeProgrammeUtility.processActionCommand(userInput);
+
+                if (command.index - 1 >= tasks.size()) {
+                    throw new DukeException("Task not found!");
+                }
+
+                switch (command.taskType) {
+                    case MARK:
+                        tasks.get(command.index - 1).isDone = true;
+                        System.out.println(Constants.MARKED_AS_DONE_LINE + ":");
+                        DukeProgrammeUtility.printToConsoleSingleTask(tasks.get(command.index - 1));
+                        break;
+                    case UNMARK:
+                        tasks.get(command.index - 1).isDone = false;
+                        System.out.println(Constants.UNMARKED_AS_DONE_LINE + ":");
+                        DukeProgrammeUtility.printToConsoleSingleTask(tasks.get(command.index - 1));
+                        break;
+                    case DELETE:
+                        System.out.println(Constants.TASK_REMOVED_LINE + ":");
+                        DukeProgrammeUtility.printToConsoleSingleTask(tasks.get(command.index - 1));
+                        tasks.remove(command.index - 1);
+                        for (int i = command.index - 1; i < tasks.size(); i++) {
+                            tasks.get(i).index = tasks.get(i).index - 1;
+                        }
+
+                        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                        System.out.println();
+                        break;
+                }
                 System.out.println();
             } else if (userInput.equals(Commands.BYE)) {
                 // terminate program
