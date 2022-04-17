@@ -10,4 +10,9 @@ public class EventTask extends Task {
     String getDescription() {
         return "[E]" + super.getDescription() + "(at: " + time + ")";
     }
+
+    @Override
+    String getDbEntryDescription() {
+        return "E | " + super.getDbEntryDescription() + " | " + time;
+    }
 }

@@ -7,4 +7,9 @@ public class TODOTask extends Task {
     String getDescription() {
         return "[T]" + super.getDescription();
     }
+
+    @Override
+    String getDbEntryDescription() {
+        return "T | " + super.getDbEntryDescription();
+    }
 }

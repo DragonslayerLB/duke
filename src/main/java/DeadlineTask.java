@@ -10,4 +10,9 @@ public class DeadlineTask extends Task {
     String getDescription() {
         return "[D]" + super.getDescription() + "(by: " + time + ")";
     }
+
+    @Override
+    String getDbEntryDescription() {
+        return "D | " + super.getDbEntryDescription() + " | " + time;
+    }
 }

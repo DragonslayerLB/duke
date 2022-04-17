@@ -12,6 +12,10 @@ public class Task {
         return "[" + (isDone ? "X" : " ") + "] " + description;
     }
 
+    String getDbEntryDescription() {
+        return (isDone ? 1 : 0) + " | " + description;
+    }
+
     String getIndexedDescription() {
         return index + "." + getDescription();
     }

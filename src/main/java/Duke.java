@@ -39,12 +39,12 @@ public class Duke {
                         for (int i = command.index - 1; i < tasks.size(); i++) {
                             tasks.get(i).index = tasks.get(i).index - 1;
                         }
-
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                         System.out.println();
                         break;
                 }
                 System.out.println();
+                DukeProgrammeUtility.saveTaskList(tasks);
             } else if (userInput.equals(Commands.BYE)) {
                 // terminate program
                 System.out.println(Constants.GOOD_BYE_LINE);
@@ -58,6 +58,7 @@ public class Duke {
                 System.out.println("  " + task.getDescription());
                 System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println();
+                DukeProgrammeUtility.saveTaskList(tasks);
             }
         } catch (DukeException e) {
             System.out.println("☹ OOPS!!! " + e.description);
@@ -68,7 +69,12 @@ public class Duke {
 
 
     public static void main(String[] args) {
-        System.out.println(Constants.GREETING_LINE);
-        processNextCommandFromUser();
+        try {
+            FileUtility.initDb();
+            System.out.println(Constants.GREETING_LINE);
+            processNextCommandFromUser();
+        } catch (Exception e) {
+            System.out.println("unable to load db because: " + e.getMessage());
+        }
     }
 }

@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -113,5 +115,22 @@ public class DukeProgrammeUtility {
         }
 
         throw new DukeException("I'm sorry, but I don't know what that means :-(");
+    }
+
+    static void saveTaskList(ArrayList<Task> tasks) throws DukeException {
+        String contentToSave = "";
+        for (int i = 0; i < tasks.size(); i++) {
+            contentToSave += tasks.get(i).getDbEntryDescription();
+
+            if (i < tasks.size() - 1) {
+                contentToSave += "\n";
+            }
+        }
+
+        try {
+            FileUtility.saveContent(contentToSave);
+        } catch (Exception e) {
+            throw new DukeException("Unable to save content to file, " + e.getMessage());
+        }
     }
 }
