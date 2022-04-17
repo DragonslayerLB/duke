@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -131,6 +133,34 @@ public class DukeProgrammeUtility {
             FileUtility.saveContent(contentToSave);
         } catch (Exception e) {
             throw new DukeException("Unable to save content to file, " + e.getMessage());
+        }
+    }
+
+    static String attemptToConvertTimeString(String time) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+            return dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy")).toString();
+        } catch (Exception e) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
+                LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+                return dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy")).toString();
+            } catch (Exception e1) {
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
+                    LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+                    return dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy")).toString();
+                } catch (Exception e2) {
+                    try {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy H:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+                        return dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy")).toString();
+                    } catch (Exception e3) {
+                        return time;
+                    }
+                }
+            }
         }
     }
 }

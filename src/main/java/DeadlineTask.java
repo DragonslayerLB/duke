@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class DeadlineTask extends Task {
     String time;
 
@@ -8,11 +11,15 @@ public class DeadlineTask extends Task {
 
     @Override
     String getDescription() {
-        return "[D]" + super.getDescription() + "(by: " + time + ")";
+        return "[D]" + super.getDescription() + "(by: " + getFormattedLocalTime() + ")";
     }
 
     @Override
     String getDbEntryDescription() {
         return "D | " + super.getDbEntryDescription() + " | " + time;
+    }
+
+    String getFormattedLocalTime() {
+        return DukeProgrammeUtility.attemptToConvertTimeString(time);
     }
 }
