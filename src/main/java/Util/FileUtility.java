@@ -1,3 +1,5 @@
+package Util;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
@@ -6,7 +8,7 @@ public class FileUtility {
     private static String fileName = "duke.txt";
     private static String fileDir = "dukeDb";
 
-    static void initDb() throws Exception {
+    public static void initDb() throws Exception {
         File dir = new File(fileDir);
         if (!dir.exists()) {
             dir.mkdirs();

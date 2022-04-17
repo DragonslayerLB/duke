@@ -1,21 +1,22 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+package Tasks;
+
+import Util.DukeProgrammeUtility;
 
 public class EventTask extends Task {
     String time;
 
-    EventTask(int index, String description, String time) {
+    public EventTask(int index, String description, String time) {
         super(index, description);
         this.time = time;
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return "[E]" + super.getDescription() + "(at: " + getFormattedLocalTime() + ")";
     }
 
     @Override
-    String getDbEntryDescription() {
+    public String getDbEntryDescription() {
         return "E | " + super.getDbEntryDescription() + " | " + time;
     }
 

@@ -1,3 +1,5 @@
+package constants;
+
 public class Commands {
     public static String BYE = "bye";
     public static String LIST = "list";
@@ -7,4 +9,5 @@ public class Commands {
     public static String DEADLINE = "deadline";
     public static String EVENT = "event";
     public static String DELETE = "delete";
+    public static String FIND = "find";
 }

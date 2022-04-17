@@ -1,5 +1,14 @@
-import java.io.File;
-import java.io.FileWriter;
+package Util;
+
+import Command.ActionCommand;
+import Command.FindCommand;
+import Exceptions.DukeException;
+import Tasks.EventTask;
+import Tasks.TODOTask;
+import Tasks.Task;
+import constants.Commands;
+import constants.TaskType;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,6 +41,23 @@ public class DukeProgrammeUtility {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static Boolean isFindCommand(String commandStr) {
+        String[] subStr = commandStr.split(" ");
+        try {
+            if (subStr.length == 2) {
+                return subStr[0].equals(Commands.FIND);
+            } else {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static FindCommand processFindCommand(String commandStr) {
+        return new FindCommand(commandStr.split(" ")[1]);
     }
 
     public static ActionCommand processActionCommand(String commandStr) throws DukeException {
@@ -119,7 +145,7 @@ public class DukeProgrammeUtility {
         throw new DukeException("I'm sorry, but I don't know what that means :-(");
     }
 
-    static void saveTaskList(ArrayList<Task> tasks) throws DukeException {
+    public static void saveTaskList(ArrayList<Task> tasks) throws DukeException {
         String contentToSave = "";
         for (int i = 0; i < tasks.size(); i++) {
             contentToSave += tasks.get(i).getDbEntryDescription();
@@ -136,7 +162,7 @@ public class DukeProgrammeUtility {
         }
     }
 
-    static String attemptToConvertTimeString(String time) {
+    public static String attemptToConvertTimeString(String time) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(time, formatter);

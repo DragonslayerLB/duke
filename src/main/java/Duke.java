@@ -1,5 +1,12 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import Command.ActionCommand;
+import Command.FindCommand;
+import Exceptions.DukeException;
+import Tasks.Task;
+import Util.DukeProgrammeUtility;
+import Util.FileUtility;
+import constants.Commands;
+import constants.Constants;
+
 import java.util.ArrayList;
 
 public class Duke {
@@ -15,6 +22,20 @@ public class Duke {
                 System.out.println(Constants.LIST_OF_TASKS_LINE + ":");
                 DukeProgrammeUtility.printToConsoleEnumerated(tasks);
                 System.out.println();
+            } else if (DukeProgrammeUtility.isFindCommand(userInput)) {
+                // handle find command
+                ArrayList<Task> foundTasks = new ArrayList<>();
+                FindCommand command = DukeProgrammeUtility.processFindCommand(userInput);
+                for (int i = 0; i < tasks.size(); i++) {
+                    if (tasks.get(i).description.contains(command.key)) {
+                        foundTasks.add(tasks.get(i));
+                    }
+                }
+
+                System.out.println(Constants.TASK_FOUND_LINE + ":");
+                DukeProgrammeUtility.printToConsoleEnumerated(foundTasks);
+                System.out.println();
+
             } else if (DukeProgrammeUtility.isActionCommand(userInput)) {
                 // mark task as done and print list
                 ActionCommand command = DukeProgrammeUtility.processActionCommand(userInput);
@@ -53,6 +74,14 @@ public class Duke {
                 return;
             } else {
                 Task task = DukeProgrammeUtility.getTask(tasks.size() + 1, userInput);
+
+                for (int i = 0; i < tasks.size(); i++) {
+                    if (task.isEqualTo(tasks.get(i))) {
+                        System.out.println("Duplicated");
+                        processNextCommandFromUser();
+                        return;
+                    }
+                }
 
                 // echo command
                 tasks.add(task);

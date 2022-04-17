@@ -1,5 +1,5 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import Tasks.Task;
+import Util.DukeProgrammeUtility;
 
 public class DeadlineTask extends Task {
     String time;
@@ -10,12 +10,12 @@ public class DeadlineTask extends Task {
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return "[D]" + super.getDescription() + "(by: " + getFormattedLocalTime() + ")";
     }
 
     @Override
-    String getDbEntryDescription() {
+    public String getDbEntryDescription() {
         return "D | " + super.getDbEntryDescription() + " | " + time;
     }
 
