@@ -7,4 +7,12 @@ public class Task {
         this.index = index;
         this.description = description;
     }
+
+    String getDescription() {
+        return "[" + (isDone ? "X" : " ") + "] " + description;
+    }
+
+    String getIndexedDescription() {
+        return index + "." + getDescription();
+    }
 }
