@@ -1,4 +1,4 @@
-package constants;
+package Constants;
 
 public class Commands {
     public static String BYE = "bye";

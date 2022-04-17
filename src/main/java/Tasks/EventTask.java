@@ -1,6 +1,6 @@
 package Tasks;
 
-import Util.DukeProgrammeUtility;
+import Util.Parser;
 
 public class EventTask extends Task {
     String time;
@@ -21,6 +21,6 @@ public class EventTask extends Task {
     }
 
     String getFormattedLocalTime() {
-        return DukeProgrammeUtility.attemptToConvertTimeString(time);
+        return Parser.attemptToConvertTimeString(time);
     }
 }

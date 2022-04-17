@@ -1,5 +1,5 @@
-import Tasks.Task;
-import Util.DukeProgrammeUtility;
+package Tasks;
+import Util.Parser;
 
 public class DeadlineTask extends Task {
     String time;
@@ -20,6 +20,6 @@ public class DeadlineTask extends Task {
     }
 
     String getFormattedLocalTime() {
-        return DukeProgrammeUtility.attemptToConvertTimeString(time);
+        return Parser.attemptToConvertTimeString(time);
     }
 }

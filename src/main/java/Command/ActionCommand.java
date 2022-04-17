@@ -1,6 +1,6 @@
 package Command;
 
-import constants.TaskType;
+import Constants.TaskType;
 
 public class ActionCommand {
     public TaskType taskType;

@@ -1,4 +1,4 @@
-package constants;
+package Constants;
 
 public class Constants {
     public static String GREETING_LINE = "Hello! I'm Duke\n" + "What can I do for you?\n";

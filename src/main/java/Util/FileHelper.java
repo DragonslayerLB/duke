@@ -1,10 +1,13 @@
 package Util;
 
+import Exceptions.DukeException;
+import Tasks.Task;
+
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class FileUtility {
+public class FileHelper {
     private static String fileName = "duke.txt";
     private static String fileDir = "dukeDb";
 
@@ -26,13 +29,20 @@ public class FileUtility {
         myWriter.close();
     }
 
-    static void readContent() throws Exception {
-        File myObj = new File(fileDir + "/" + fileName);
-        Scanner myReader = new Scanner(myObj);
-        while (myReader.hasNextLine()) {
-            String data = myReader.nextLine();
-            System.out.println(data);
+    public static void saveTaskList(ArrayList<Task> tasks) throws DukeException {
+        String contentToSave = "";
+        for (int i = 0; i < tasks.size(); i++) {
+            contentToSave += tasks.get(i).getDbEntryDescription();
+
+            if (i < tasks.size() - 1) {
+                contentToSave += "\n";
+            }
         }
-        myReader.close();
+
+        try {
+            FileHelper.saveContent(contentToSave);
+        } catch (Exception e) {
+            throw new DukeException("Unable to save content to file, " + e.getMessage());
+        }
     }
 }

@@ -6,8 +6,8 @@ import Exceptions.DukeException;
 import Tasks.EventTask;
 import Tasks.TODOTask;
 import Tasks.Task;
-import constants.Commands;
-import constants.TaskType;
+import Constants.Commands;
+import Constants.TaskType;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 /*
  * General utility class
  * */
-public class DukeProgrammeUtility {
+public class Parser {
     /*
      * Reads the next line of user input
      * */
@@ -29,7 +29,10 @@ public class DukeProgrammeUtility {
         return line;
     }
 
-    public static Boolean isActionCommand(String commandStr) {
+    /*
+    * Validate the command format and see if it is a valid action command
+    * */
+    public static Boolean validateActionCommand(String commandStr) {
         String[] subStr = commandStr.split(" ");
         try {
             if (subStr.length == 2) {
@@ -43,7 +46,10 @@ public class DukeProgrammeUtility {
         }
     }
 
-    public static Boolean isFindCommand(String commandStr) {
+    /*
+     * Validate the command format and see if it is a valid find command
+     * */
+    public static Boolean validateFindCommand(String commandStr) {
         String[] subStr = commandStr.split(" ");
         try {
             if (subStr.length == 2) {
@@ -56,10 +62,16 @@ public class DukeProgrammeUtility {
         }
     }
 
+    /*
+    * Process components of a find command
+    * */
     public static FindCommand processFindCommand(String commandStr) {
         return new FindCommand(commandStr.split(" ")[1]);
     }
 
+    /*
+     * Process components of a find command
+     * */
     public static ActionCommand processActionCommand(String commandStr) throws DukeException {
         String[] subStr = commandStr.split(" ");
         TaskType type;
@@ -77,20 +89,7 @@ public class DukeProgrammeUtility {
         return new ActionCommand(type, Integer.parseInt(subStr[1]));
     }
 
-    public static String getFormattedTaskDescription(Task task) {
-        return "[" + (task.isDone ? "X" : " ") + "] " + task.description;
-    }
 
-    public static void printToConsoleSingleTask(Task task) {
-        System.out.println(getFormattedTaskDescription(task));
-    }
-
-    public static void printToConsoleEnumerated(ArrayList<Task> tasks) {
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            System.out.println(task.getIndexedDescription());
-        }
-    }
 
     public static Task getTask(int index, String commandStr) throws DukeException {
         String[] words = commandStr.split(" ");
@@ -143,23 +142,6 @@ public class DukeProgrammeUtility {
         }
 
         throw new DukeException("I'm sorry, but I don't know what that means :-(");
-    }
-
-    public static void saveTaskList(ArrayList<Task> tasks) throws DukeException {
-        String contentToSave = "";
-        for (int i = 0; i < tasks.size(); i++) {
-            contentToSave += tasks.get(i).getDbEntryDescription();
-
-            if (i < tasks.size() - 1) {
-                contentToSave += "\n";
-            }
-        }
-
-        try {
-            FileUtility.saveContent(contentToSave);
-        } catch (Exception e) {
-            throw new DukeException("Unable to save content to file, " + e.getMessage());
-        }
     }
 
     public static String attemptToConvertTimeString(String time) {
