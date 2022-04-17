@@ -1,1 +1,2 @@
-T | 1 | hello
+D | 0 | buy milk  | tmrw
+E | 0 | buy cow  | evening

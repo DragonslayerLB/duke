@@ -3,6 +3,7 @@ package Util;
 import Command.ActionCommand;
 import Command.FindCommand;
 import Exceptions.DukeException;
+import Tasks.DeadlineTask;
 import Tasks.EventTask;
 import Tasks.TODOTask;
 import Tasks.Task;
@@ -30,8 +31,8 @@ public class Parser {
     }
 
     /*
-    * Validate the command format and see if it is a valid action command
-    * */
+     * Validate the command format and see if it is a valid action command
+     * */
     public static Boolean validateActionCommand(String commandStr) {
         String[] subStr = commandStr.split(" ");
         try {
@@ -63,8 +64,8 @@ public class Parser {
     }
 
     /*
-    * Process components of a find command
-    * */
+     * Process components of a find command
+     * */
     public static FindCommand processFindCommand(String commandStr) {
         return new FindCommand(commandStr.split(" ")[1]);
     }
@@ -90,7 +91,6 @@ public class Parser {
     }
 
 
-
     public static Task getTask(int index, String commandStr) throws DukeException {
         String[] words = commandStr.split(" ");
 
@@ -112,13 +112,14 @@ public class Parser {
 
             return new TODOTask(index, description);
         } else if (words[0].equals(Commands.EVENT) || words[0].equals(Commands.DEADLINE)) {
+            boolean isEventTask = words[0].equals(Commands.EVENT);
             int atIndex = -1;
             if (words.length == 1) {
                 throw new DukeException("The description of a " + words[0] + " cannot be empty.");
             }
 
             for (int i = 1; i < words.length; i++) {
-                if (words[i].equals(words[0].equals(Commands.EVENT) ? "/at" : "/by")) {
+                if (words[i].equals(isEventTask ? "/at" : "/by")) {
                     atIndex = i;
                     break;
                 }
@@ -138,7 +139,7 @@ public class Parser {
                 }
             }
 
-            return new EventTask(index, description, time);
+            return isEventTask ? new EventTask(index, description, time) : new DeadlineTask(index, description, time);
         }
 
         throw new DukeException("I'm sorry, but I don't know what that means :-(");

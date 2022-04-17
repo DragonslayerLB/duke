@@ -20,4 +20,6 @@ public interface UIManager {
      * displays any text on the UI
      * */
     void displayText(String text);
+
+    void displayLogo();
 }

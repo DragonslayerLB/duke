@@ -21,6 +21,7 @@ public class DukeViewController implements ViewController {
     public void initialise() {
         try {
             uiManager = new ConsoleUIManager();
+            uiManager.displayLogo();
             FileHelper.initDb();
             uiManager.displayText((Constants.GREETING_LINE));
         } catch (Exception e) {

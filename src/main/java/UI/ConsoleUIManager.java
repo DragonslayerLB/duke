@@ -19,4 +19,14 @@ public class ConsoleUIManager implements UIManager {
     public void displayText(String text) {
         System.out.println(text);
     }
+
+    @Override
+    public void displayLogo() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+    }
 }

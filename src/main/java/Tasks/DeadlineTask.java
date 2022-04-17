@@ -4,7 +4,7 @@ import Util.Parser;
 public class DeadlineTask extends Task {
     String time;
 
-    DeadlineTask(int index, String description, String time) {
+    public DeadlineTask(int index, String description, String time) {
         super(index, description);
         this.time = time;
     }
